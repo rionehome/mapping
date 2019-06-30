@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd ~
-rosrun map_server map_saver -f map
+rosrun map_server map_server $1

@@ -1,5 +1,7 @@
 <launch>
 
-    <node pkg="mapping" name="mapping_save" type="save.py" output="screen">
+    <node pkg="mapping" name="mapping_load" type="load.py" output="screen">
+    <param name="info_file" value="mapping"/>
     </node>
+
 </launch>

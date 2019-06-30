@@ -17,8 +17,9 @@ class Load:
         self.load_map_pub = rospy.Publisher("/navigation/load_location", String, queue_size=10)
         path = "{}/shell/{}".format(rospkg.RosPack().get_path("mapping"), "load.sh")
         command = ["bash", path, "map.yaml"]
-        print(path, command)
-        rospy.sleep(0.5)
+
+        # gmappingが立ち上がってからでないと初期化されてしまうのでgmappingが立ち上がるまで待機
+        rospy.sleep(2.0)
 
         subprocess.Popen(command)
         file = rospy.get_param("{}/info_file".format(rospy.get_name()))
