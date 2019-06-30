@@ -3,9 +3,6 @@
     <node pkg="location" name="location" type="location_manager.py" output="screen">
         <param name="info_file" value="mapping.txt"/>
     </node>
-     <node pkg="mapping" name="mapping" type="mapping.py" output="screen">
-        <param name="info_file" value="mapping.txt"/>
-    </node>
 
     <include file="$(find turtlebot_bringup)/launch/minimal.launch"/>
     <include file="$(find turtlebot_custom)/launch/gmapping_lidar.launch"/>

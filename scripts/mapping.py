@@ -8,11 +8,14 @@ from std_msgs.msg import String
 
 class Mapping:
 	def __init__(self):
+		rospy.init_node("mapping")
+
 		self.change_dict_pub = rospy.Publisher("/sound_system/sphinx/dict", String, queue_size=10)
 		self.change_gram_pub = rospy.Publisher("/sound_system/sphinx/gram", String, queue_size=10)
-		
+		self.save_map_pub = rospy.Publisher("/navigation/save_location", String, queue_size=10)
+
 		self.main()
-	
+
 	def resume_text(self, dict_name):
 		# type: (str)->str
 		"""
@@ -23,8 +26,9 @@ class Mapping:
 		self.change_gram_pub.publish(dict_name + ".gram")
 		rospy.wait_for_service("/sound_system/recognition")
 		response = rospy.ServiceProxy("/sound_system/recognition", StringService)()
+
 		return response.response
-	
+
 	@staticmethod
 	def hot_word():
 		"""
@@ -34,7 +38,7 @@ class Mapping:
 		rospy.wait_for_service("/hotword/detect", timeout=1)
 		print "hot_word待機"
 		rospy.ServiceProxy("/hotword/detect", HotwordService)()
-	
+
 	@staticmethod
 	def speak(sentence):
 		# type: (str) -> None
@@ -45,11 +49,16 @@ class Mapping:
 		"""
 		rospy.wait_for_service("/sound_system/speak")
 		rospy.ServiceProxy("/sound_system/speak", StringService)(sentence)
-	
+
 	def main(self):
 		while True:
 			rospy.wait_for_service('/sound_system/nlp', timeout=1)
-			print rospy.ServiceProxy('/sound_system/nlp', NLPService)('Here is {}'.format(raw_input("place: ")))
+			word = raw_input("place: ")
+			if not word == "0":
+				print rospy.ServiceProxy('/sound_system/nlp', NLPService)('Here is {}'.format(word))
+			else:
+				self.save_map_pub.publish("mapping")
+				print "セーブ"
 
 
 if __name__ == '__main__':
