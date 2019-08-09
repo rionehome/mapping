@@ -1,6 +1,5 @@
 # mapping
 ## Overview
-詳しくは知らないので私が弄った部分のみ記述 byねねっち
 ## 機能
 save.launch: gmappingのyaml, pgm保存とlocationのデータ保存を行う
 
