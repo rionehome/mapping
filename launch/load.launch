@@ -1,7 +1,5 @@
 <launch>
-
     <node pkg="mapping" name="mapping_load" type="load.py" output="screen">
-    <param name="info_file" value="mapping"/>
+        <param name="info_file" value="mapping"/>
     </node>
-
 </launch>

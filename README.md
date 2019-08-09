@@ -1,11 +1,14 @@
 # mapping
 ## Overview
 ## 機能
-save.launch: gmappingのyaml, pgm保存とlocationのデータ保存を行う
+`roslaunch mapping save.launch`  
+gmappingのyaml, pgm保存とlocationのデータ保存を行う
 
-load.launch: gmappingのyaml読み込みとlocationのデータ読み込みを行う
+`roslaunch mapping load.launch`  
+gmappingのyaml読み込みとlocationのデータ読み込みを行う
 
-それぞれを roslaunch で実行する
+`roslaunch mapping mapping.launch`
+locationの登録をfollow meを行いながら実行する
 
 ## Saveに関して
 
