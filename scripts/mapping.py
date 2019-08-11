@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from location.srv import RegisterLocation
 import rospy
-from sound_system.srv import HotwordService
+from sound_system.srv import HotwordService, StringService
 from std_msgs.msg import String
 
 
@@ -49,8 +49,9 @@ class Mapping:
     def main(self):
         while not rospy.is_shutdown():
             self.hot_word()
+            rospy.ServiceProxy("/sound_system/recognition", StringService)("follow_me_sphinx")  # 音声認識開始
 
 
 if __name__ == '__main__':
-    Mapping()
-    rospy.spin()
+    mapping = Mapping()
+    mapping.main()
