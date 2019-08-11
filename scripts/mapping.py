@@ -22,12 +22,13 @@ class Mapping:
         「hey, ducker」に反応
         :return:
         """
-        rospy.wait_for_service("/hotword/detect", timeout=1)
+        rospy.wait_for_service("/sound_system/hotword", timeout=1)
         print "hot_word待機"
-        rospy.ServiceProxy("/hotword/detect", HotwordService)()
+        rospy.ServiceProxy("/sound_system/hotword", HotwordService)()
     
     def register_callback(self, msg):
         # type:(String)->None
+        print "register"
         if not msg.data == "0":
             try:
                 rospy.wait_for_service(self.register_topic, timeout=1)
@@ -38,14 +39,14 @@ class Mapping:
         else:
             self.save_map_pub.publish("mapping")
             print "セーブ"
-
+    
     def sound_callback(self, msg):
         # type:(String)->None
-        if not msg.data == "follow me":
+        if msg.data == "follow me":
             self.follow_me_control_pub.publish('start')
         else:
-            self.save_map_pub.publish('stop')
-
+            self.follow_me_control_pub.publish('stop')
+    
     def main(self):
         while not rospy.is_shutdown():
             self.hot_word()
