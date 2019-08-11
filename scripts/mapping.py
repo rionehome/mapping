@@ -13,6 +13,7 @@ class Mapping:
         rospy.init_node("mapping")
         rospy.Subscriber("/mapping/register_place", String, self.register_callback)
         self.save_map_pub = rospy.Publisher("/location/save_location", String, queue_size=10)
+        rospy.Subscriber("/sound_system/result", String, self.sound_callback)
         self.follow_me_control_pub = rospy.Publisher("/follow_me/control", String, queue_size=10)
     
     @staticmethod
@@ -37,7 +38,14 @@ class Mapping:
         else:
             self.save_map_pub.publish("mapping")
             print "セーブ"
-    
+
+    def sound_callback(self, msg):
+        # type:(String)->None
+        if not msg.data == "follow me":
+            self.follow_me_control_pub.publish('start')
+        else:
+            self.save_map_pub.publish('stop')
+
     def main(self):
         while not rospy.is_shutdown():
             self.hot_word()
