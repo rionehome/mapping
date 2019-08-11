@@ -2,16 +2,18 @@
     <node pkg="location" name="location" type="location_manager.py" output="screen">
         <param name="info_file" value="mapping.txt"/>
     </node>
-    <node pkg="mapping" name="mapping" type="mapping.py" output="screen"/>
-
     <include file="$(find turtlebot_bringup)/launch/minimal.launch"/>
     <include file="$(find turtlebot_custom)/launch/gmapping_lidar.launch"/>
     <include file="$(find turtlebot_custom)/launch/lidar.launch"/>
     <include file="$(find turtlebot_custom)/launch/rviz.launch"/>
     <node pkg="sound_system" name="hotword" type="hotword_detector.py" output="screen"/>
-
+    <node pkg="sound_system" name="sphinx" type="sphinx.py" output="screen">
+        <param name="dict" value="follow_me_sphinx.dict"/>
+        <param name="gram" value="follow_me_sphinx.gram"/>
+    </node>
 	<node pkg="move" name="velocity" respawn="false" type="velocity"/>
     <node pkg="follow_me" name="follow_me" respawn="true" output="screen" type="follow_me">
-	    <param name="status" value="true"/>
+	    <param name="status" value="false"/>
 	</node>
+    <node pkg="mapping" name="mapping" type="mapping.py" output="screen"/>
 </launch>
